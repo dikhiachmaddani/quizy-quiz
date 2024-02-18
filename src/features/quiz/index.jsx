@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import { getScore, getShowScore, putScore, putShowScore, resetAll } from "./services/useScore";
 import Result from "./pages/Result";
 import Intruction from "./pages/Intruction";
-import { getRunnerQuiz, setRunnerQuiz } from "./services/useRunnerQuiz";
 
 const initialScore = { answered: 0, correct: 0, incorrect: 0 };
 
@@ -21,11 +20,11 @@ export default function Quiz({ duration, onLogout }) {
     const [currentQuestion, setCurrentQuestion] = useState(useIndexCurrentQuestion() || 0);
     const [showScore, setShowScore] = useState(getShowScore() || false);
     const [score, setScore] = useState(getScore() || initialScore)
-    const [runQuiz, setRunQuiz] = useState(getRunnerQuiz() || false);
-
+    const [runQuiz, setRunQuiz] = useState(localStorage.getItem("runnerQuiz"));
+    console.log();
 
     const onQuiz = (data) => {
-        setRunnerQuiz(data);
+        localStorage.setItem("runnerQuiz", data);
         setRunQuiz(data);
     };
 
@@ -82,17 +81,16 @@ export default function Quiz({ duration, onLogout }) {
     };
 
     const onPlayAgain = () => {
-        onQuiz(true);
-        start(duration);
         putScore(initialScore);
         putShowScore(false);
         setScore(initialScore);
         setShowScore(false);
+        onStarted();
     };
 
     if (showScore) return <Result score={score} onPlayAgain={onPlayAgain} onLogout={onLogout} onQuiz={onQuiz} />
 
-    if (!showScore && runQuiz && questions.length) {
+    if (!showScore && runQuiz) {
         return (
             <Layout>
                 {isLoading ? <p className="text-neutral-primary text-5xl">waiting for question...</p> :

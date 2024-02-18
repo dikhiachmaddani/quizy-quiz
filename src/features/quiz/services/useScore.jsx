@@ -22,6 +22,7 @@ function getScore() {
 function resetAll() {
     localStorage.removeItem("data");
     localStorage.removeItem("currentQuestion");
+    localStorage.removeItem("runnerQuiz");
   }
 
 export { putScore, getScore, getShowScore, putShowScore, resetAll };
