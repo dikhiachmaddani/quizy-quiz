@@ -16,6 +16,7 @@ export default function Intruction({ onLogout, onStarted, onQuiz }) {
                     <li>The quiz duration is 60 seconds.</li>
                     <li>Each question can only be done and displayed once.</li>
                     <li>When the answer has been selected, the next question will automatically be displayed.</li>
+                    <li>If the timer runs out, the question will be closed and the results will be displayed (correct number, incorrect number & number of answers).</li>
                     <li>If the browser accidentally closes, you can still continue working on the questions.</li>
                 </ul>
             </div>
